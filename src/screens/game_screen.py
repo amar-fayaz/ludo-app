@@ -24,7 +24,13 @@ class LudoGameScreen(MDScreen):
 
     def __init__(self, **kwargs):
         super(LudoGameScreen, self).__init__(**kwargs)
-        MDApp.get_running_app().game = LudoGame()        
+        app_instance = MDApp.get_running_app()
+        app_instance.game = LudoGame()
+        Clock.schedule_once(self.post_init_steps)
+
+    def post_init_steps(self, *args):
+        app_instance = MDApp.get_running_app()
+        app_instance.game.assign_base_to_player(self.game_board.player_homes)
 
     def roll_die(self):
         self.roll_display.text = str(random.randint(1, 6))
