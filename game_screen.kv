@@ -1,0 +1,147 @@
+#:kivy 1.0.6
+#:import LudoGameScreen game_screen.LudoGameScreen
+#:import PLAYER_COLOR_WHEEL data.config.PLAYER_COLOR_WHEEL
+#:import PODIUM_COLOR data.config.PODIUM_COLOR
+#:import UNIT_SQUARE_DIMENSION data.config.UNIT_SQUARE_DIMENSION
+
+
+<LudoGameScreen>:
+    roll_display: roll_display
+    game_board: board
+
+    canvas.before:
+        # Color:
+        #     rgba: 0.113, 0.705, 0.960, 1
+        # Rectangle:
+        #     size: root.size
+
+    LudoBoard:
+        id: board
+
+    
+    MDRaisedButton:
+        text : "Roll"
+        pos_hint: {"center_x": 0.5, "y": 0.05}  
+        on_release: root.roll_die()
+
+
+    Label:
+        id:roll_display
+        font_size: 20
+        pos_hint: {"center_x": 0.5, "center_y":0.5} 
+        text: ''   
+
+<GameSquare>:
+    size_hint: None, None
+    pos: self.pos
+    size: self.size
+
+    canvas.before:
+        Color:
+            rgba: self.fill_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+        Color:
+            rgba: self.border_color
+        Line:
+            rectangle: self.x, self.y, self.width, self.height
+
+<UnitSquare>:
+    size: self.unit_dimension, self.unit_dimension
+    fill_color: PLAYER_COLOR_WHEEL[self.color] 
+
+<PlayerSquare>:
+    outer_square: outer
+    inner_square: inner
+    pin1        : pin1
+    pin2        : pin2
+    pin3        : pin3
+    pin4        : pin4
+    size_hint   : None, None
+    pos         : self.pos
+    size        : self.dimension, self.dimension
+
+
+    GameSquare:
+        id        : outer
+        pos       : root.pos
+        size      : root.dimension, root.dimension
+        fill_color: PLAYER_COLOR_WHEEL[root.color]
+
+        GameSquare:
+            id      : inner
+            size    : root.dimension * 0.7, root.dimension * 0.7
+            pos_hint: {"center_y": 0.5, "center_x": 0.5}
+
+            MDRoundImageButton:
+                id : pin1
+                size: UNIT_SQUARE_DIMENSION, UNIT_SQUARE_DIMENSION
+                source: "./assets/" + root.color + ".png"
+                disabled: True
+                pos_hint: {"center_x": 0.25, "center_y":0.75}
+
+            MDRoundImageButton:
+                id : pin2
+                size: UNIT_SQUARE_DIMENSION, UNIT_SQUARE_DIMENSION
+                source: "./assets/" + root.color + ".png"
+                pos_hint: {"center_x": 0.75, "center_y":0.75}
+
+            MDRoundImageButton:
+                id : pin3
+                size: UNIT_SQUARE_DIMENSION, UNIT_SQUARE_DIMENSION
+                source: "./assets/" + root.color + ".png"
+                pos_hint: {"center_x": 0.75, "center_y":0.25}
+
+            MDRoundImageButton:
+                id : pin4
+                size: UNIT_SQUARE_DIMENSION, UNIT_SQUARE_DIMENSION
+                source: "./assets/" + root.color + ".png"
+                pos_hint: {"center_x": 0.25, "center_y":0.25}
+
+<LudoBoard>:
+    bottom_left_base: bottom_left_base
+    top_left_base: top_left_base
+    top_right_base: top_right_base
+    bottom_right_base: bottom_right_base
+    winners_podium: podium
+    size_hint: None, None
+    size:root.board_dimension, root.board_dimension
+    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+    # GameSquare:
+    #     size    : root.board_dimension, root.board_dimension
+    #     pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+    GameSquare:
+        id : podium
+        size: 3 * root.unit_dimension, 3 * root.unit_dimension
+        fill_color: PODIUM_COLOR
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+    PlayerSquare:
+        id : bottom_left_base
+        pos: self.parent.pos
+        player_color: PLAYER_COLOR_WHEEL["blue"]
+        color: "blue"
+
+    PlayerSquare:
+        id: bottom_right_base
+        x : self.parent.x + self.parent.width - self.width
+        y : self.parent.y
+        player_color: PLAYER_COLOR_WHEEL["yellow"]
+        color: "yellow"
+
+    PlayerSquare:
+        id: top_left_base
+        x : self.parent.x
+        y : self.parent.y + self.parent.height - self.height            
+        player_color: PLAYER_COLOR_WHEEL["red"]
+        color: "red"
+    
+    PlayerSquare:
+        id: top_right_base
+        x : self.parent.x + self.parent.width - self.width
+        y : self.parent.y + self.parent.height - self.height            
+        player_color: PLAYER_COLOR_WHEEL["green"]
+        color: "green"

@@ -1,0 +1,39 @@
+#:kivy 1.0.6
+#:import HomeScreen home_screen.HomeScreen
+#:include join_game.kv
+
+# <Content>:
+#     orientation: "vertical"
+#     spacing: "12dp"
+#     size_hint_y: None
+#     height: "120dp"
+
+#     MDTextField:
+#         hint_text: "City"
+
+#     MDTextField:
+#         hint_text: "Street"
+
+<MDTextButton@HomeScreen>:
+    font_size: "38"
+
+<HomeScreen>:
+    name: "home"
+    canvas.before:
+        Color: 
+            rgba: 0.129, 0.129, 0.129, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    MDTextButton:
+        text: "Start"
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        on_release: root.show_join_confirmation()
+
+    MDTextButton:
+        text: "Quit"
+        pos_hint: {"center_x": 0.5, "center_y": 0.4}
+        on_release: root.show_exit_confirmation()
+
+

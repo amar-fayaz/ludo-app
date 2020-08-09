@@ -1,0 +1,26 @@
+#:kivy 1.0.6
+#:import JoinGameForm join_game.JoinGameForm
+
+<JoinGameForm>:
+    username_form: name_field
+    host_ip_form: ip_field
+    loading_spinner: connection_spinner
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+    height: "120dp"
+
+    MDTextField:
+        id: name_field
+        hint_text: "Name"
+
+    MDTextField:
+        id: ip_field
+        hint_text: "Host IP"
+
+    MDSpinner:
+        id: connection_spinner
+        size_hint: None, None
+        size: 12, 12
+        active: False
+        #pos_hint={"top": 0.9, "right": 0.9}
