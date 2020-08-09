@@ -1,0 +1,7 @@
+#:kivy 1.0.6
+#:import BasePin src.game_model.base_pin.BasePin
+#:import UNIT_SQUARE_DIMENSION src.data.config.UNIT_SQUARE_DIMENSION
+
+<BasePin>:
+    size: UNIT_SQUARE_DIMENSION, UNIT_SQUARE_DIMENSION
+    source: "./src/assets/" + self.color + ".png"

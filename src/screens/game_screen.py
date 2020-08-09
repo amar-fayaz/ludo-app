@@ -1,4 +1,5 @@
 from kivymd.uix.screen import MDScreen
+from kivymd.app import MDApp
 from kivymd.uix.floatlayout import MDFloatLayout
 from kivy.properties import NumericProperty, ListProperty, \
                             ObjectProperty, ReferenceListProperty, \
@@ -14,11 +15,16 @@ from kivymd.uix.button import MDRoundImageButton
 
 import random
 from ..data.config import *
+from ..game_engine.LudoGame import LudoGame
 
 class LudoGameScreen(MDScreen):
     current_roll = NumericProperty(0)
     roll_display = ObjectProperty(None)
     game_board = ObjectProperty(None)
+
+    def __init__(self, **kwargs):
+        super(LudoGameScreen, self).__init__(**kwargs)
+        MDApp.get_running_app().game = LudoGame()        
 
     def roll_die(self):
         self.roll_display.text = str(random.randint(1, 6))

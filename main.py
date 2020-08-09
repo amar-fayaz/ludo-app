@@ -7,6 +7,7 @@ Config.set('graphics','resizable', 0)
 from kivymd.app import MDApp
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
+from kivy.properties import ObjectProperty
 
 from user_data import UserData
 
@@ -19,6 +20,8 @@ class LudoScreenManager(ScreenManager):
 
 
 class LudoApp(MDApp):
+    game = ObjectProperty(None)
+
     def build(self):
         self.theme_cls.primary_palette = "Green"
         self.theme_cls.primary_hue = "800"

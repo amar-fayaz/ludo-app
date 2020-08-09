@@ -30,6 +30,12 @@ class LudoBoard(GameSquare):
     home_stretch = ReferenceListProperty(bottom_left_home_stretch, top_left_home_stretch, \
                                         top_right_home_stretch, bottom_right_home_stretch)
 
+    player1_home = ReferenceListProperty(bottom_left_base, bottom_left_home_stretch)
+    player2_home = ReferenceListProperty(top_left_base, top_left_home_stretch)
+    player3_home = ReferenceListProperty(top_right_base, top_right_home_stretch)
+    player4_home = ReferenceListProperty(bottom_right_base, bottom_right_home_stretch)
+    player_homes = ReferenceListProperty(player1_home, player2_home, player3_home, player4_home)
+
     def __init__(self, **kwargs):
         super(LudoBoard, self).__init__(**kwargs)
         Clock.schedule_once(self.create_unit_squares)
