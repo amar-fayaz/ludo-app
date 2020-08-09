@@ -29,7 +29,7 @@ class PlayingPin():
         self.pin_progress = -1
 
     def set_pin_model(self, pin_model):
-        if pin_model == None:
+        if self.PinModel == None:
             self.PinModel = pin_model
         else:
             raise ValueError("Pin Model already set.")
