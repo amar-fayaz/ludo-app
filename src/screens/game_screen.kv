@@ -1,0 +1,35 @@
+#:kivy 1.0.6
+#:import LudoGameScreen src.screens.game_screen.LudoGameScreen
+
+#:import PLAYER_COLOR_WHEEL src.data.config.PLAYER_COLOR_WHEEL
+#:import PODIUM_COLOR src.data.config.PODIUM_COLOR
+#:import UNIT_SQUARE_DIMENSION src.data.config.UNIT_SQUARE_DIMENSION
+#:include src/game_model/ludo_board.kv
+
+<LudoGameScreen>:
+    roll_display: roll_display
+    game_board: board
+
+    canvas.before:
+        # Color:
+        #     rgba: 0.113, 0.705, 0.960, 1
+        # Rectangle:
+        #     size: root.size
+
+    LudoBoard:
+        id: board
+
+    
+    MDRaisedButton:
+        text : "Roll"
+        pos_hint: {"center_x": 0.5, "y": 0.05}  
+        on_release: root.roll_die()
+
+
+    Label:
+        id:roll_display
+        font_size: 20
+        pos_hint: {"center_x": 0.5, "center_y":0.5} 
+        text: ''   
+
+

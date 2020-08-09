@@ -7,7 +7,7 @@ from kivymd.uix.textfield import MDTextField
 
 import time
 
-from join_game import JoinGameForm
+from ..join_game import JoinGameForm
 
 class HomeScreen(Screen):
     exit_confirmation = None

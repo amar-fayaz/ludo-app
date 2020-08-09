@@ -1,66 +1,10 @@
-from kivymd.uix.screen import MDScreen
-from kivymd.uix.floatlayout import MDFloatLayout
 from kivy.properties import NumericProperty, ListProperty, \
-                            ObjectProperty, ReferenceListProperty, \
-                            OptionProperty, BooleanProperty, \
-                            StringProperty
-from kivymd.uix.boxlayout import MDBoxLayout
+                            ObjectProperty, ReferenceListProperty
 from kivy.clock import Clock
-from kivy.uix.image import Image
 
-from kivymd.uix.textfield import MDTextField
-
-from kivymd.uix.button import MDRoundImageButton
-
-import random
-from data.config import *
-
-class LudoGameScreen(MDScreen):
-    current_roll = NumericProperty(0)
-    roll_display = ObjectProperty(None)
-    game_board = ObjectProperty(None)
-
-    def roll_die(self):
-        self.roll_display.text = str(random.randint(1, 6))
-
-    # ------------------- Handle Key Presses -----------------------------
-    def handle_key_downs(self, window, key, *args):
-        pass
-
-class GameSquare(MDFloatLayout):
-    fill_color = ListProperty(WHITE_COLOR)
-    border_color = ListProperty(BLACK_COLOR)
-
-class UnitSquare(GameSquare):
-    color = StringProperty("white")
-    content = OptionProperty("None", options=["None", "Icon", "Color"])
-    unit_dimension = NumericProperty(UNIT_SQUARE_DIMENSION)
-    safe_zone = BooleanProperty(False)
-
-    def __init__ (self, option="None", **kwargs):
-        super(UnitSquare, self).__init__(**kwargs)
-        self.content = option
-        if not (option == "None"):
-            self.add_widget(Image(
-                source="./assets/arrow_left.png",
-                size=(self.unit_dimension - 1, self.unit_dimension - 1),
-                pos_hint={"center_x": 0.5, "center_y": 0.5}
-                ))
-
-class PlayerSquare(MDFloatLayout):
-    dimension = PLAYER_BASE_DIMENSION
-    player_color = ListProperty(WHITE_COLOR)
-    color = StringProperty("white")
-    outer_square = ObjectProperty(None)
-    inner_square = ObjectProperty(None)
-    pin1 = ObjectProperty(None)
-    pin2 = ObjectProperty(None)
-    pin3 = ObjectProperty(None)
-    pin4 = ObjectProperty(None)
-
-    def __init__(self, **kwargs):
-        super(PlayerSquare, self).__init__(**kwargs)
-  
+from ..data.config import *
+from .game_square import GameSquare
+from .unit_square import  UnitSquare
 
 class LudoBoard(GameSquare):
     board_dimension = NumericProperty(BOARD_DIMENSION)

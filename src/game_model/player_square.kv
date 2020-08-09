@@ -1,0 +1,50 @@
+#:kivy 1.0.6
+#:import PlayerSquare src.game_model.player_square.PlayerSquare
+
+<PlayerSquare>:
+    outer_square: outer
+    inner_square: inner
+    pin1        : pin1
+    pin2        : pin2
+    pin3        : pin3
+    pin4        : pin4
+    size_hint   : None, None
+    pos         : self.pos
+    size        : self.dimension, self.dimension
+
+
+    GameSquare:
+        id        : outer
+        pos       : root.pos
+        size      : root.dimension, root.dimension
+        fill_color: PLAYER_COLOR_WHEEL[root.color]
+
+        GameSquare:
+            id      : inner
+            size    : root.dimension * 0.7, root.dimension * 0.7
+            pos_hint: {"center_y": 0.5, "center_x": 0.5}
+
+            MDRoundImageButton:
+                id : pin1
+                size: UNIT_SQUARE_DIMENSION, UNIT_SQUARE_DIMENSION
+                source: "./src/assets/" + root.color + ".png"
+                disabled: True
+                pos_hint: {"center_x": 0.25, "center_y":0.75}
+
+            MDRoundImageButton:
+                id : pin2
+                size: UNIT_SQUARE_DIMENSION, UNIT_SQUARE_DIMENSION
+                source: "./src/assets/" + root.color + ".png"
+                pos_hint: {"center_x": 0.75, "center_y":0.75}
+
+            MDRoundImageButton:
+                id : pin3
+                size: UNIT_SQUARE_DIMENSION, UNIT_SQUARE_DIMENSION
+                source: "./src/assets/" + root.color + ".png"
+                pos_hint: {"center_x": 0.75, "center_y":0.25}
+
+            MDRoundImageButton:
+                id : pin4
+                size: UNIT_SQUARE_DIMENSION, UNIT_SQUARE_DIMENSION
+                source: "./src/assets/" + root.color + ".png"
+                pos_hint: {"center_x": 0.25, "center_y":0.25}

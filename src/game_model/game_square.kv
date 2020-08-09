@@ -1,0 +1,18 @@
+#:kivy 1.0.6
+#:import GameSquare src.game_model.game_square.GameSquare
+
+<GameSquare>:
+    size_hint: None, None
+    pos: self.pos
+    size: self.size
+
+    canvas.before:
+        Color:
+            rgba: self.fill_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+        Color:
+            rgba: self.border_color
+        Line:
+            rectangle: self.x, self.y, self.width, self.height

@@ -1,0 +1,54 @@
+#:kivy 1.0.6
+#:import LudoBoard src.game_model.ludo_board.LudoBoard
+
+#:include src/game_model/player_square.kv
+#:include src/game_model/game_square.kv
+#:include src/game_model/unit_square.kv
+
+
+<LudoBoard>:
+    bottom_left_base: bottom_left_base
+    top_left_base: top_left_base
+    top_right_base: top_right_base
+    bottom_right_base: bottom_right_base
+    winners_podium: podium
+    size_hint: None, None
+    size:root.board_dimension, root.board_dimension
+    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+    # GameSquare:
+    #     size    : root.board_dimension, root.board_dimension
+    #     pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+    GameSquare:
+        id : podium
+        size: 3 * root.unit_dimension, 3 * root.unit_dimension
+        fill_color: PODIUM_COLOR
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+    PlayerSquare:
+        id : bottom_left_base
+        pos: self.parent.pos
+        player_color: PLAYER_COLOR_WHEEL["blue"]
+        color: "blue"
+
+    PlayerSquare:
+        id: bottom_right_base
+        x : self.parent.x + self.parent.width - self.width
+        y : self.parent.y
+        player_color: PLAYER_COLOR_WHEEL["yellow"]
+        color: "yellow"
+
+    PlayerSquare:
+        id: top_left_base
+        x : self.parent.x
+        y : self.parent.y + self.parent.height - self.height            
+        player_color: PLAYER_COLOR_WHEEL["red"]
+        color: "red"
+    
+    PlayerSquare:
+        id: top_right_base
+        x : self.parent.x + self.parent.width - self.width
+        y : self.parent.y + self.parent.height - self.height            
+        player_color: PLAYER_COLOR_WHEEL["green"]
+        color: "green"
