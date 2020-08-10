@@ -19,21 +19,26 @@ from ..game_engine.LudoGame import LudoGame
 
 class LudoGameScreen(MDScreen):
     current_roll = NumericProperty(0)
+    roll_button = ObjectProperty(None)
     roll_display = ObjectProperty(None)
     game_board = ObjectProperty(None)
+    game_instance = ObjectProperty(None)
 
     def __init__(self, **kwargs):
         super(LudoGameScreen, self).__init__(**kwargs)
-        app_instance = MDApp.get_running_app()
-        app_instance.game = LudoGame()
-        Clock.schedule_once(self.post_init_steps)
+        self.game_instance = LudoGame()
+        #Clock.schedule_once(self.post_init_steps)
 
     def post_init_steps(self, *args):
-        app_instance = MDApp.get_running_app()
-        app_instance.game.assign_base_to_player(self.game_board.player_homes)
+        self.game_instance.assign_base_to_player(self.game_board.player_homes)
+        self.game_instance.set_white_game_paths(self.game_board.game_path)
 
     def roll_die(self):
-        self.roll_display.text = str(random.randint(1, 6))
+        self.roll_button.disabled = True
+        roll_value = str(random.randint(1, 6))
+        self.roll_display.text = roll_value
+        if not self.game_instance.process_dice_roll(int(roll_value)):
+            self.roll_button.disabled = False
 
     # ------------------- Handle Key Presses -----------------------------
     def handle_key_downs(self, window, key, *args):

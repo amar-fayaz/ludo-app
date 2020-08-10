@@ -8,7 +8,8 @@
 
 <LudoGameScreen>:
     roll_display: roll_display
-    game_board: board
+    roll_button : roll_button
+    game_board  : board
 
     canvas.before:
         # Color:
@@ -21,6 +22,7 @@
 
     
     MDRaisedButton:
+        id: roll_button
         text : "Roll"
         pos_hint: {"center_x": 0.5, "y": 0.05}  
         on_release: root.roll_die()

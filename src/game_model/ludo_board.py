@@ -38,19 +38,20 @@ class LudoBoard(GameSquare):
 
     def __init__(self, **kwargs):
         super(LudoBoard, self).__init__(**kwargs)
-        Clock.schedule_once(self.create_unit_squares)
+        Clock.schedule_once(self.post_init_steps)
         #self.bind(pos=self.create_unit_squares)
 
-    def create_unit_squares(self, *args):
+    def post_init_steps(self, *args):
         self.create_game_path()
         self.create_home_stretch()
+
         for path in self.game_path:
             self.add_widget(path)   
 
         for stretch in self.home_stretch:
             for square in stretch:
                 self.add_widget(square) 
-
+        self.parent.post_init_steps()
 
     def add_to_game_path(self, unit_square):
         self.game_path.append(unit_square)
