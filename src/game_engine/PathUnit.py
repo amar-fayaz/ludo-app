@@ -1,6 +1,6 @@
 class PathUnit():
     def __init__(self, model):
-        self.PathSquareModel = None
+        self.PathSquareModel = model
         self.safe_zone = False
         self.pins = []
 
