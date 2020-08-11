@@ -25,6 +25,14 @@ class Player():
             pin.set_pin_model(pin_model)
         self.HomeStretch = base_model_list[1]
         self.PlayerColor = self.PlayerBaseModel.color
+        
+    def move_pin(self, pin_model, roll_value):
+        activated_pin = next(pin for pin in self.PlayerPins if pin.PinModel == pin_model)
+        if activated_pin == None:
+            raise ValueError("Cannot find the corresponding Pin object")
+        activated_pin.move_pin(roll_value)
+        return activated_pin
+
 
 
 class PlayingPin():
@@ -33,6 +41,7 @@ class PlayingPin():
         self.home_base_pos = None
         self.current_pos = None
         self.pin_progress = -1
+        self.color = None
         self.start_index = pin_start_index
 
     def get_path_index(self, roll_value):
@@ -41,17 +50,24 @@ class PlayingPin():
         if self.pin_progress >= 0 and self.pin_progress + self.roll_value <= 50:
             return (self.pin_progress + self.start_index) % 52
 
+    def get_current_path_index(self):
+        return self.pin_progress + self.start_index
+
     def set_pin_model(self, pin_model):
         if self.PinModel == None:
             self.PinModel = pin_model
+            self.color = pin_model.color
         else:
             raise ValueError("Pin Model already set.")
 
-    def can_enter_home_stretch(self, new_step):
-        return self.pin_progress + new_step > 50
+    def can_enter_home_stretch(self):
+        return self.pin_progress > 50
 
     def pin_in_base(self):
         return self.pin_progress == -1
+
+    def pin_in_podium(self):
+        return self.pin_progress == 56
 
     def eligible_to_move(self, roll_value):
         if self.pin_in_base():
@@ -69,4 +85,7 @@ class PlayingPin():
 
     def move_pin(self, roll_value):
         if self.eligible_to_move(roll_value):
-            self.pin_progress += roll_value
+            if self.pin_in_base() and roll_value == 6:
+                self.pin_progress = 0
+            else:
+                self.pin_progress += roll_value

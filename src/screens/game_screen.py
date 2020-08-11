@@ -27,18 +27,17 @@ class LudoGameScreen(MDScreen):
     def __init__(self, **kwargs):
         super(LudoGameScreen, self).__init__(**kwargs)
         self.game_instance = LudoGame()
-        #Clock.schedule_once(self.post_init_steps)
+        MDApp.get_running_app().game = self.game_instance
 
     def post_init_steps(self, *args):
+        self.game_instance.assign_roll_button_model(self.roll_button)
         self.game_instance.assign_base_to_player(self.game_board.player_homes)
         self.game_instance.set_white_game_paths(self.game_board.game_path)
 
     def roll_die(self):
-        self.roll_button.disabled = True
         roll_value = str(random.randint(1, 6))
         self.roll_display.text = roll_value
-        if not self.game_instance.process_dice_roll(int(roll_value)):
-            self.roll_button.disabled = False
+        self.game_instance.process_dice_roll(int(roll_value))
 
     # ------------------- Handle Key Presses -----------------------------
     def handle_key_downs(self, window, key, *args):
