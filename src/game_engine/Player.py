@@ -1,3 +1,5 @@
+from ..data.config import PLAYER_PIN_DIMENSION
+
 class Player():
     def __init__(self, starting_index):
         self.PlayerBaseModel = None
@@ -11,13 +13,16 @@ class Player():
         self.PlayerColor = None
 
     def process_dice_roll(self, roll_value):
-        eligible_pins = [pin for pin in self.PlayerPins if pin.eligible_to_move(roll_value)]
+        eligible_pins = self.get_eligible_pins(roll_value)
         if eligible_pins:
             for pin in eligible_pins:
-                pin.PinModel.disabled = False
+                pin.enable_pin()
             return True
         else:
             return False
+
+    def get_eligible_pins(self, roll_value):
+        return [pin for pin in self.PlayerPins if pin.eligible_to_move(roll_value)]
 
     def set_base_model(self, base_model_list):
         self.PlayerBaseModel = base_model_list[0]
@@ -27,6 +32,8 @@ class Player():
         self.PlayerColor = self.PlayerBaseModel.color
         
     def move_pin(self, pin_model, roll_value):
+        for pin in self.PlayerPins:
+            pin.disable_pin()
         activated_pin = next(pin for pin in self.PlayerPins if pin.PinModel == pin_model)
         if activated_pin == None:
             raise ValueError("Cannot find the corresponding Pin object")
@@ -43,6 +50,9 @@ class PlayingPin():
         self.pin_progress = -1
         self.color = None
         self.start_index = pin_start_index
+        self.pin_parent_model = None
+        self.home_pin_model = None
+        self.road_pin_model = None
 
     def get_path_index(self, roll_value):
         if self.pin_progress == -1 and roll_value == 6:
@@ -56,6 +66,8 @@ class PlayingPin():
     def set_pin_model(self, pin_model):
         if self.PinModel == None:
             self.PinModel = pin_model
+            self.pin_parent_model = pin_model.parent
+            self.home_pin_model = None
             self.color = pin_model.color
         else:
             raise ValueError("Pin Model already set.")
@@ -83,9 +95,25 @@ class PlayingPin():
     def return_to_base(self):
         self.pin_progress = -1
 
+    def disable_pin(self):
+        self.PinModel.disabled = True
+
+    def enable_pin(self):
+        self.PinModel.disabled = False
+
+    def switch_pin_model_to_playing(self):
+        self.road_pin_model = self.PinModel.create_playing_pin(PLAYER_PIN_DIMENSION, self.PinModel.center)
+        self.PinModel.remove_widget_from_parent()
+        self.PinModel = self.road_pin_model
+
+
     def move_pin(self, roll_value):
         if self.eligible_to_move(roll_value):
             if self.pin_in_base() and roll_value == 6:
+                self.switch_pin_model_to_playing()
                 self.pin_progress = 0
             else:
                 self.pin_progress += roll_value
+
+    def move_pin_visual_to_square(self, square_model):
+        self.PinModel.center = square_model
