@@ -26,6 +26,7 @@
         text : "Roll"
         pos_hint: {"center_x": 0.5, "y": 0.05}  
         on_release: root.roll_die()
+        on_press: root.roll_display.text = '-'
 
 
     Label:
