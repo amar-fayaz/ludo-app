@@ -44,10 +44,11 @@ class LudoGame():
     
     def process_dice_roll(self, roll_value):
         self.current_roll = roll_value
+        eligible_pins = self.current_player.get_eligible_pins(self.current_roll)
         if self.current_player.process_dice_roll(roll_value):
             self.roll_button_model.disabled = True
-            if len(self.current_player.get_eligible_pins(roll_value)) == 1:
-                self.process_pin_click(self.current_player.get_eligible_pins(roll_value)[0].PinModel)
+            if len(self.current_eligible_pins) == 1:
+                self.process_pin_click(self.current_eligible_pins[0].PinModel)
         else:
             self.change_player()
 

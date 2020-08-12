@@ -1,4 +1,5 @@
 from ..data.config import PLAYER_PIN_DIMENSION, PLAYER_OPACITY_DELTA
+from kivy.clock import Clock
 
 class Player():
     def __init__(self, starting_index):
@@ -64,6 +65,8 @@ class PlayingPin():
         self.home_pin_model = None
         self.road_pin_model = None
 
+        self._opacity_delta = - PLAYER_OPACITY_DELTA
+
     def get_path_index(self, roll_value):
         if self.pin_progress == -1 and roll_value == 6:
             return self.start_index
@@ -107,9 +110,21 @@ class PlayingPin():
 
     def disable_pin(self):
         self.PinModel.disabled = True
+        Clock.unschedule(self.highlight_pin)
+        self.reset_opacity()
 
     def enable_pin(self):
         self.PinModel.disabled = False
+        Clock.schedule_interval(self.highlight_pin, 1/20.)
+        
+    def highlight_pin(self, dt):
+        self.PinModel.opacity += self._opacity_delta
+        if self.PinModel.opacity <= 0.6 or self.PinModel.opacity >= 1.0:
+            self._opacity_delta = - self._opacity_delta
+
+    def reset_opacity(self):
+        self.PinModel.opacity = 1.0
+        self._opacity_delta = - PLAYER_OPACITY_DELTA
 
     def switch_pin_model_to_playing(self):
         self.road_pin_model = self.PinModel.create_playing_pin(PLAYER_PIN_DIMENSION, self.PinModel.center)
