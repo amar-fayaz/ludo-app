@@ -38,7 +38,6 @@ class LudoGame():
         self.current_player.highlight_player_square()
 
     def change_player(self):
-        #Clock.schedule_interval(self.highlight_player_square, 1/20.)
         prev_player = self.current_player
         self.current_player = self.Players[(self.Players.index(self.current_player) + 1) % len(self.Players)]
         prev_player.set_player_square_full_opacity()
@@ -47,6 +46,8 @@ class LudoGame():
         self.current_roll = roll_value
         if self.current_player.process_dice_roll(roll_value):
             self.roll_button_model.disabled = True
+            if len(self.current_player.get_eligible_pins(roll_value)) == 1:
+                self.process_pin_click(self.current_player.get_eligible_pins(roll_value)[0].PinModel)
         else:
             self.change_player()
 
