@@ -1,5 +1,6 @@
 from .Player import Player
 from .PathUnit import PathUnit
+from kivy.clock import Clock
 
 class LudoGame():
     def __init__(self, game_board):
@@ -28,12 +29,19 @@ class LudoGame():
     def assign_base_to_player(self, player_home_list):
         for player, home in zip(self.Players, player_home_list):
             player.set_base_model(home)
+        Clock.schedule_interval(self.highlight_player_square, 1/20.)
 
     def assign_roll_button_model(self, button_model):
         self.roll_button_model = button_model
+    
+    def highlight_player_square(self, dt):
+        self.current_player.highlight_player_square()
 
     def change_player(self):
+        #Clock.schedule_interval(self.highlight_player_square, 1/20.)
+        prev_player = self.current_player
         self.current_player = self.Players[(self.Players.index(self.current_player) + 1) % len(self.Players)]
+        prev_player.set_player_square_full_opacity()
     
     def process_dice_roll(self, roll_value):
         self.current_roll = roll_value

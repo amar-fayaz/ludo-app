@@ -1,4 +1,4 @@
-from ..data.config import PLAYER_PIN_DIMENSION
+from ..data.config import PLAYER_PIN_DIMENSION, PLAYER_OPACITY_DELTA
 
 class Player():
     def __init__(self, starting_index):
@@ -11,6 +11,8 @@ class Player():
         self.Pin_start_pos = starting_index
         self.HomeStretch = []
         self.PlayerColor = None
+
+        self._opacity_delta = - PLAYER_OPACITY_DELTA
 
     def process_dice_roll(self, roll_value):
         eligible_pins = self.get_eligible_pins(roll_value)
@@ -40,6 +42,14 @@ class Player():
         activated_pin.move_pin(roll_value)
         return activated_pin
 
+    def highlight_player_square(self):
+        self.PlayerBaseModel.outer_square.fill_color[3] += self._opacity_delta
+        if self.PlayerBaseModel.outer_square.fill_color[3] <= 0.6 or self.PlayerBaseModel.outer_square.fill_color[3] >= 1.0:
+            self._opacity_delta = - self._opacity_delta
+
+    def set_player_square_full_opacity(self):
+        self.PlayerBaseModel.outer_square.fill_color[3] = 1.0
+        self._opacity_delta = - PLAYER_OPACITY_DELTA
 
 
 class PlayingPin():
