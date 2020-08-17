@@ -47,8 +47,8 @@ class LudoGame():
         eligible_pins = self.current_player.get_eligible_pins(self.current_roll)
         if self.current_player.process_dice_roll(roll_value):
             self.roll_button_model.disabled = True
-            if len(self.current_eligible_pins) == 1:
-                self.process_pin_click(self.current_eligible_pins[0].PinModel)
+            if len(eligible_pins) == 1:
+                self.process_pin_click(eligible_pins[0].PinModel)
         else:
             self.change_player()
 
@@ -57,7 +57,12 @@ class LudoGame():
         self.update_game(moved_pin)
         
     def move_pin_action(self, moved_pin):
-        if not moved_pin.can_enter_home_stretch():
+        if moved_pin.pin_in_podium():
+            pass
+        elif moved_pin.can_enter_home_stretch():
+            path_unit_to_move_into = self.current_player.HomeStretch[moved_pin.pin_progress - 51]
+            moved_pin.move_pin_visual_to_square(path_unit_to_move_into.PathSquareModel.center)
+        else:
             path_unit_to_move_into = self.WhitePaths[moved_pin.get_current_path_index() % len(self.WhitePaths)]
             moved_pin.move_pin_visual_to_square(path_unit_to_move_into.PathSquareModel.center)
             enemy_pins_in_same_square = path_unit_to_move_into.add_pin(moved_pin)
