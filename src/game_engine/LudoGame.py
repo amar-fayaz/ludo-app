@@ -79,6 +79,8 @@ class LudoGame():
             enemy_pins_in_same_square = path_unit_to_move_into.add_pin(moved_pin)
             
             if enemy_pins_in_same_square and path_unit_to_move_into.is_not_safe():
+                for pin in enemy_pins_in_same_square:
+                    pin.return_to_base_operation()
                 return True
 
     def update_game(self, moved_pin):

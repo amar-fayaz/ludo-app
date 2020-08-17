@@ -93,7 +93,7 @@ class PlayingPin():
         if self.PinModel == None:
             self.PinModel = pin_model
             self.pin_parent_model = pin_model.parent
-            self.home_pin_model = None
+            self.home_pin_model = pin_model
             self.color = pin_model.color
         else:
             raise ValueError("Pin Model already set.")
@@ -144,8 +144,17 @@ class PlayingPin():
 
     def switch_pin_model_to_playing(self):
         self.road_pin_model = self.PinModel.create_playing_pin(PLAYER_PIN_DIMENSION, self.PinModel.center)
-        self.PinModel.remove_widget_from_parent()
+        self.PinModel.hide_widget()
         self.PinModel = self.road_pin_model
+
+    def switch_pin_model_to_base(self):
+        self.home_pin_model.show_widget()
+        self.PinModel.remove_widget_from_parent()
+        self.PinModel = self.home_pin_model
+
+    def return_to_base_operation(self):
+        self.return_to_base()
+        self.switch_pin_model_to_base()
 
     def get_podium_location(self, podium_center):
         return tuple(map(add, podium_center, self.podium_transform))
