@@ -57,8 +57,7 @@ class LudoGame():
         self.update_game(moved_pin)
         
     def move_pin_action(self, moved_pin):
-        if moved_pin.pin_in_podium():
-            pass
+        if moved_pin.pin_reached_podium():
         elif moved_pin.can_enter_home_stretch():
             path_unit_to_move_into = self.current_player.HomeStretch[moved_pin.pin_progress - 51]
             moved_pin.move_pin_visual_to_square(path_unit_to_move_into.PathSquareModel.center)
@@ -72,6 +71,6 @@ class LudoGame():
 
     def update_game(self, moved_pin):
         cut_operated = self.move_pin_action(moved_pin)
-        if not(self.current_roll == 6 or cut_operated or moved_pin.pin_in_podium()):
+        if not(self.current_roll == 6 or cut_operated or moved_pin.pin_reached_podium()):
             self.change_player()
         self.roll_button_model.disabled = False
