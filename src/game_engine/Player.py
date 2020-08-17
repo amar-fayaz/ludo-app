@@ -1,4 +1,5 @@
 from ..data.config import PLAYER_PIN_DIMENSION, PLAYER_OPACITY_DELTA
+from .PathUnit import PathUnit
 from kivy.clock import Clock
 
 class Player():
@@ -31,8 +32,12 @@ class Player():
         self.PlayerBaseModel = base_model_list[0]
         for pin_model, pin in zip(self.PlayerBaseModel.pins, self.PlayerPins):
             pin.set_pin_model(pin_model)
-        self.HomeStretch = base_model_list[1]
         self.PlayerColor = self.PlayerBaseModel.color
+        self.set_home_stretch(base_model_list[1])
+    
+    def set_home_stretch(self, home_strech_model):
+        for square in home_strech_model:
+            self.HomeStretch.append(PathUnit(square))
         
     def move_pin(self, pin_model, roll_value):
         for pin in self.PlayerPins:
@@ -140,5 +145,5 @@ class PlayingPin():
             else:
                 self.pin_progress += roll_value
 
-    def move_pin_visual_to_square(self, square_model):
-        self.PinModel.center = square_model
+    def move_pin_visual_to_square(self, square_model_coordinate):
+        self.PinModel.center = square_model_coordinate
