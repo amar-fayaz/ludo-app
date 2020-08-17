@@ -7,6 +7,12 @@ class BasePin(MDRoundImageButton):
     color = StringProperty("white")
     pin_type = StringProperty("base")
 
+    def hide_widget(self):
+        self.opacity = 0
+
+    def show_widget(self):
+        self.opacity = 1
+
     def remove_widget_from_parent(self):
         self.parent.remove_widget(self)
     
