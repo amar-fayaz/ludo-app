@@ -18,6 +18,7 @@ class LudoGame():
         self.current_roll = -1
         self.roll_button_model = None
         self.WhitePaths = []
+        self.WinnersPodium = None
 
     def set_white_game_paths(self, white_path_array):
         for path in white_path_array:
@@ -31,6 +32,15 @@ class LudoGame():
             player.set_base_model(home)
         Clock.schedule_interval(self.highlight_player_square, 1/20.)
 
+    def set_winners_podium(self, podium_model):
+        self.WinnersPodium = podium_model
+        podium_transform_for_players = [(0, - podium_model.height / 4),\
+                                       (- podium_model.width / 4, 0),\
+                                       (0, + podium_model.height / 4),\
+                                       (+ podium_model.width / 4, 0)]
+        for player, transform in zip(self.Players, podium_transform_for_players):
+            player.set_podium_transform(transform)
+
     def assign_roll_button_model(self, button_model):
         self.roll_button_model = button_model
     
@@ -38,10 +48,11 @@ class LudoGame():
         self.current_player.highlight_player_square()
 
     def change_player(self):
-        prev_player = self.current_player
-        self.current_player = self.Players[(self.Players.index(self.current_player) + 1) % len(self.Players)]
-        prev_player.set_player_square_full_opacity()
-    
+        # prev_player = self.current_player
+        # self.current_player = self.Players[(self.Players.index(self.current_player) + 1) % len(self.Players)]
+        # prev_player.set_player_square_full_opacity()
+        pass
+
     def process_dice_roll(self, roll_value):
         self.current_roll = roll_value
         eligible_pins = self.current_player.get_eligible_pins(self.current_roll)
@@ -58,6 +69,7 @@ class LudoGame():
         
     def move_pin_action(self, moved_pin):
         if moved_pin.pin_reached_podium():
+            moved_pin.move_pin_visual_to_square(moved_pin.get_podium_location(self.WinnersPodium.center))
         elif moved_pin.can_enter_home_stretch():
             path_unit_to_move_into = self.current_player.HomeStretch[moved_pin.pin_progress - 51]
             moved_pin.move_pin_visual_to_square(path_unit_to_move_into.PathSquareModel.center)

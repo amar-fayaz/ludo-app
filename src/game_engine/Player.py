@@ -1,6 +1,7 @@
 from ..data.config import PLAYER_PIN_DIMENSION, PLAYER_OPACITY_DELTA
 from .PathUnit import PathUnit
 from kivy.clock import Clock
+from operator import add
 
 class Player():
     def __init__(self, starting_index):
@@ -13,6 +14,7 @@ class Player():
         self.Pin_start_pos = starting_index
         self.HomeStretch = []
         self.PlayerColor = None
+        self.PodiumTransform = None
 
         self._opacity_delta = - PLAYER_OPACITY_DELTA
 
@@ -39,6 +41,11 @@ class Player():
         for square in home_strech_model:
             self.HomeStretch.append(PathUnit(square))
         
+    def set_podium_transform(self, podium_transform):
+        self.PodiumTransform = podium_transform
+        for pin in self.PlayerPins:
+            pin.set_podium_transform(podium_transform)
+
     def move_pin(self, pin_model, roll_value):
         for pin in self.PlayerPins:
             pin.disable_pin()
@@ -69,6 +76,7 @@ class PlayingPin():
         self.pin_parent_model = None
         self.home_pin_model = None
         self.road_pin_model = None
+        self.podium_transform = None
 
         self._opacity_delta = - PLAYER_OPACITY_DELTA
 
@@ -90,13 +98,16 @@ class PlayingPin():
         else:
             raise ValueError("Pin Model already set.")
 
+    def set_podium_transform(self, podium_transform):
+        self.podium_transform = podium_transform
+
     def can_enter_home_stretch(self):
         return self.pin_progress > 50
 
     def pin_in_base(self):
         return self.pin_progress == -1
 
-    def pin_in_podium(self):
+    def pin_reached_podium(self):
         return self.pin_progress == 56
 
     def eligible_to_move(self, roll_value):
@@ -136,6 +147,8 @@ class PlayingPin():
         self.PinModel.remove_widget_from_parent()
         self.PinModel = self.road_pin_model
 
+    def get_podium_location(self, podium_center):
+        return tuple(map(add, podium_center, self.podium_transform))
 
     def move_pin(self, roll_value):
         if self.eligible_to_move(roll_value):

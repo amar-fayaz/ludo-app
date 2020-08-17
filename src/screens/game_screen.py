@@ -33,6 +33,7 @@ class LudoGameScreen(MDScreen):
         self.game_instance.assign_roll_button_model(self.roll_button)
         self.game_instance.assign_base_to_player(self.game_board.player_homes)
         self.game_instance.set_white_game_paths(self.game_board.game_path)
+        self.game_instance.set_winners_podium(self.game_board.winners_podium)
 
     def roll_die(self):
         roll_value = str(random.randint(1, 6))
