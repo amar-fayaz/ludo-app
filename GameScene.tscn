@@ -1,0 +1,633 @@
+[gd_scene load_steps=51 format=2]
+
+[ext_resource path="res://assets/images/BluePin.png" type="Texture" id=1]
+[ext_resource path="res://assets/images/LudoBoard.png" type="Texture" id=2]
+[ext_resource path="res://icon.png" type="Texture" id=3]
+[ext_resource path="res://assets/images/GreenPin.png" type="Texture" id=4]
+[ext_resource path="res://assets/images/YellowPIn.png" type="Texture" id=5]
+[ext_resource path="res://assets/images/RedPin.png" type="Texture" id=6]
+[ext_resource path="res://script/GameScene.gd" type="Script" id=7]
+[ext_resource path="res://script/Dice.gd" type="Script" id=8]
+[ext_resource path="res://script/BluePlayer.gd" type="Script" id=9]
+[ext_resource path="res://script/Pin.gd" type="Script" id=10]
+[ext_resource path="res://script/RedPlayer.gd" type="Script" id=11]
+[ext_resource path="res://script/GreenPlayer.gd" type="Script" id=12]
+[ext_resource path="res://script/YellowPlayer.gd" type="Script" id=13]
+[ext_resource path="res://assets/animation/dicesprite.png" type="Texture" id=14]
+[ext_resource path="res://script/IndicatorPin.gd" type="Script" id=15]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 320, 1064, 0, 0, 0, 0, 320, 1024, 0, 0, 0, 0, 320, 992, 0, 0, 0, 0, 320, 952, 0, 0, 0, 0, 320, 912, 0, 0, 0, 0, 280, 880, 0, 0, 0, 0, 248, 880, 0, 0, 0, 0, 208, 880, 0, 0, 0, 0, 168, 880, 0, 0, 0, 0, 128, 880, 0, 0, 0, 0, 96, 880, 0, 0, 0, 0, 96, 840, 0, 0, 0, 0, 96, 808, 0, 0, 0, 0, 128, 808, 0, 0, 0, 0, 168, 808, 0, 0, 0, 0, 208, 808, 0, 0, 0, 0, 240, 808, 0, 0, 0, 0, 280, 808, 0, 0, 0, 0, 320, 760, 0, 0, 0, 0, 320, 728, 0, 0, 0, 0, 320, 688, 0, 0, 0, 0, 320, 648, 0, 0, 0, 0, 320, 616, 0, 0, 0, 0, 320, 576, 0, 0, 0, 0, 360, 576, 0, 0, 0, 0, 392, 576, 0, 0, 0, 0, 392, 608, 0, 0, 0, 0, 392, 648, 0, 0, 0, 0, 392, 680, 0, 0, 0, 0, 392, 720, 0, 0, 0, 0, 392, 760, 0, 0, 0, 0, 432, 800, 0, 0, 0, 0, 472, 800, 0, 0, 0, 0, 504, 800, 0, 0, 0, 0, 552, 800, 0, 0, 0, 0, 592, 800, 0, 0, 0, 0, 624, 800, 0, 0, 0, 0, 624, 840, 0, 0, 0, 0, 624, 880, 0, 0, 0, 0, 592, 880, 0, 0, 0, 0, 544, 880, 0, 0, 0, 0, 512, 880, 0, 0, 0, 0, 472, 880, 0, 0, 0, 0, 440, 880, 0, 0, 0, 0, 400, 920, 0, 0, 0, 0, 400, 952, 0, 0, 0, 0, 400, 992, 0, 0, 0, 0, 400, 1032, 0, 0, 0, 0, 400, 1064, 0, 0, 0, 0, 400, 1104, 0, 0, 0, 0, 360, 1104, 0, 0, 0, 0, 360, 1064, 0, 0, 0, 0, 360, 1032, 0, 0, 0, 0, 360, 992, 0, 0, 0, 0, 360, 952, 0, 0, 0, 0, 360, 920, 0, 0, 0, 0, 360, 880 )
+}
+
+[sub_resource type="Curve2D" id=2]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 128, 800, 0, 0, 0, 0, 168, 800, 0, 0, 0, 0, 208, 800, 0, 0, 0, 0, 240, 800, 0, 0, 0, 0, 280, 800, 0, 0, 0, 0, 320, 760, 0, 0, 0, 0, 320, 728, 0, 0, 0, 0, 320, 688, 0, 0, 0, 0, 328, 648, 0, 0, 0, 0, 320, 616, 0, 0, 0, 0, 320, 576, 0, 0, 0, 0, 360, 576, 0, 0, 0, 0, 392, 576, 0, 0, 0, 0, 392, 616, 0, 0, 0, 0, 392, 648, 0, 0, 0, 0, 392, 688, 0, 0, 0, 0, 392, 728, 0, 0, 0, 0, 392, 760, 0, 0, 0, 0, 432, 800, 0, 0, 0, 0, 472, 800, 0, 0, 0, 0, 512, 800, 0, 0, 0, 0, 552, 800, 0, 0, 0, 0, 584, 800, 0, 0, 0, 0, 624, 800, 0, 0, 0, 0, 624, 840, 0, 0, 0, 0, 624, 880, 0, 0, 0, 0, 584, 872, 0, 0, 0, 0, 544, 880, 0, 0, 0, 0, 512, 880, 0, 0, 0, 0, 472, 880, 0, 0, 0, 0, 440, 880, 0, 0, 0, 0, 400, 920, 0, 0, 0, 0, 400, 952, 0, 0, 0, 0, 400, 992, 0, 0, 0, 0, 392, 1032, 0, 0, 0, 0, 400, 1064, 0, 0, 0, 0, 400, 1104, 0, 0, 0, 0, 360, 1104, 0, 0, 0, 0, 320, 1104, 0, 0, 0, 0, 320, 1064, 0, 0, 0, 0, 320, 1032, 0, 0, 0, 0, 320, 992, 0, 0, 0, 0, 320, 952, 0, 0, 0, 0, 320, 912, 0, 0, 0, 0, 280, 880, 0, 0, 0, 0, 248, 880, 0, 0, 0, 0, 208, 880, 0, 0, 0, 0, 168, 872, 0, 0, 0, 0, 128, 880, 0, 0, 0, 0, 96, 880, 0, 0, 0, 0, 96, 840, 0, 0, 0, 0, 128, 840, 0, 0, 0, 0, 168, 840, 0, 0, 0, 0, 208, 840, 0, 0, 0, 0, 240, 840, 0, 0, 0, 0, 280, 840, 0, 0, 0, 0, 312, 840 )
+}
+
+[sub_resource type="Curve2D" id=3]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 392, 616, 0, 0, 0, 0, 392, 648, 0, 0, 0, 0, 392, 688, 0, 0, 0, 0, 392, 728, 0, 0, 0, 0, 392, 760, 0, 0, 0, 0, 432, 800, 0, 0, 0, 0, 472, 800, 0, 0, 0, 0, 512, 800, 0, 0, 0, 0, 544, 800, 0, 0, 0, 0, 576, 800, 0, 0, 0, 0, 624, 800, 0, 0, 0, 0, 624, 840, 0, 0, 0, 0, 624, 880, 0, 0, 0, 0, 584, 880, 0, 0, 0, 0, 544, 880, 0, 0, 0, 0, 512, 880, 0, 0, 0, 0, 472, 880, 0, 0, 0, 0, 440, 880, 0, 0, 0, 0, 400, 920, 0, 0, 0, 0, 400, 952, 0, 0, 0, 0, 400, 992, 0, 0, 0, 0, 400, 1032, 0, 0, 0, 0, 400, 1064, 0, 0, 0, 0, 400, 1104, 0, 0, 0, 0, 360, 1104, 0, 0, 0, 0, 320, 1104, 0, 0, 0, 0, 320, 1072, 0, 0, 0, 0, 320, 1032, 0, 0, 0, 0, 320, 992, 0, 0, 0, 0, 320, 952, 0, 0, 0, 0, 320, 912, 0, 0, 0, 0, 280, 880, 0, 0, 0, 0, 248, 880, 0, 0, 0, 0, 208, 880, 0, 0, 0, 0, 168, 880, 0, 0, 0, 0, 128, 880, 0, 0, 0, 0, 96, 880, 0, 0, 0, 0, 96, 840, 0, 0, 0, 0, 96, 808, 0, 0, 0, 0, 128, 808, 0, 0, 0, 0, 168, 808, 0, 0, 0, 0, 200, 808, 0, 0, 0, 0, 240, 808, 0, 0, 0, 0, 280, 808, 0, 0, 0, 0, 320, 760, 0, 0, 0, 0, 320, 728, 0, 0, 0, 0, 320, 688, 0, 0, 0, 0, 320, 648, 0, 0, 0, 0, 320, 608, 0, 0, 0, 0, 320, 576, 0, 0, 0, 0, 360, 576, 0, 0, 0, 0, 360, 608, 0, 0, 0, 0, 360, 648, 0, 0, 0, 0, 360, 688, 0, 0, 0, 0, 360, 728, 0, 0, 0, 0, 360, 760, 0, 0, 0, 0, 360, 792 )
+}
+
+[sub_resource type="Curve2D" id=4]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 584, 880, 0, 0, 0, 0, 552, 880, 0, 0, 0, 0, 512, 880, 0, 0, 0, 0, 472, 880, 0, 0, 0, 0, 432, 880, 0, 0, 0, 0, 400, 912, 0, 0, 0, 0, 400, 952, 0, 0, 0, 0, 400, 984, 0, 0, 0, 0, 400, 1024, 0, 0, 0, 0, 400, 1064, 0, 0, 0, 0, 400, 1104, 0, 0, 0, 0, 360, 1104, 0, 0, 0, 0, 320, 1104, 0, 0, 0, 0, 320, 1064, 0, 0, 0, 0, 320, 1024, 0, 0, 0, 0, 320, 992, 0, 0, 0, 0, 320, 952, 0, 0, 0, 0, 320, 912, 0, 0, 0, 0, 280, 880, 0, 0, 0, 0, 248, 880, 0, 0, 0, 0, 208, 880, 0, 0, 0, 0, 168, 880, 0, 0, 0, 0, 128, 880, 0, 0, 0, 0, 96, 880, 0, 0, 0, 0, 96, 840, 0, 0, 0, 0, 96, 808, 0, 0, 0, 0, 128, 808, 0, 0, 0, 0, 168, 808, 0, 0, 0, 0, 208, 808, 0, 0, 0, 0, 248, 808, 0, 0, 0, 0, 280, 808, 0, 0, 0, 0, 320, 760, 0, 0, 0, 0, 320, 728, 0, 0, 0, 0, 320, 688, 0, 0, 0, 0, 320, 648, 0, 0, 0, 0, 320, 608, 0, 0, 0, 0, 320, 576, 0, 0, 0, 0, 360, 576, 0, 0, 0, 0, 392, 576, 0, 0, 0, 0, 392, 608, 0, 0, 0, 0, 392, 648, 0, 0, 0, 0, 392, 688, 0, 0, 0, 0, 392, 728, 0, 0, 0, 0, 392, 760, 0, 0, 0, 0, 432, 800, 0, 0, 0, 0, 472, 800, 0, 0, 0, 0, 504, 800, 0, 0, 0, 0, 552, 800, 0, 0, 0, 0, 584, 800, 0, 0, 0, 0, 624, 800, 0, 0, 0, 0, 624, 840, 0, 0, 0, 0, 584, 840, 0, 0, 0, 0, 552, 840, 0, 0, 0, 0, 512, 840, 0, 0, 0, 0, 472, 840, 0, 0, 0, 0, 432, 840, 0, 0, 0, 0, 400, 840 )
+}
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 0, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 130, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 260, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=8]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 390, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=9]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 520, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=10]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 650, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=11]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 780, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=12]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 910, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=13]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 1040, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=14]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 1170, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=15]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 1300, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=16]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 1430, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=17]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 1560, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=18]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 1690, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=19]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 1820, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=20]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 1950, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=21]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 2080, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=22]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 2210, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=23]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 2340, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=24]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 2470, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=25]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 2600, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=26]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 2730, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=27]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 2860, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=28]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 2990, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=29]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 3120, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=30]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 3250, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=31]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 3380, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=32]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 3510, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=33]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 3640, 0, 130, 130 )
+
+[sub_resource type="AtlasTexture" id=34]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 3770, 0, 130, 130 )
+
+[sub_resource type="SpriteFrames" id=35]
+animations = [ {
+"frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ), SubResource( 27 ), SubResource( 28 ) ],
+"loop": false,
+"name": "DiceRoll",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 29 ), SubResource( 30 ), SubResource( 31 ), SubResource( 32 ), SubResource( 33 ), SubResource( 34 ) ],
+"loop": false,
+"name": "DiceFace",
+"speed": 10.0
+} ]
+
+[node name="GameScene" type="Node2D"]
+position = Vector2( 0, -144 )
+script = ExtResource( 7 )
+
+[node name="Board" type="Sprite" parent="."]
+position = Vector2( 360, 840 )
+scale = Vector2( 1.26535, 1.26535 )
+texture = ExtResource( 2 )
+
+[node name="BluePlayer" type="Sprite" parent="."]
+script = ExtResource( 9 )
+
+[node name="icon" type="Sprite" parent="BluePlayer"]
+position = Vector2( 136, 1216 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 3 )
+
+[node name="BluePin" type="Sprite" parent="BluePlayer"]
+position = Vector2( 176, 1176 )
+scale = Vector2( 1.58333, 1.58333 )
+texture = ExtResource( 1 )
+script = ExtResource( 15 )
+
+[node name="BluePath" type="Path2D" parent="BluePlayer"]
+curve = SubResource( 1 )
+
+[node name="B1" type="Sprite" parent="BluePlayer/BluePath"]
+position = Vector2( 144, 968 )
+scale = Vector2( 0.924999, 0.924999 )
+texture = ExtResource( 1 )
+script = ExtResource( 10 )
+
+[node name="Button" type="Button" parent="BluePlayer/BluePath/B1"]
+modulate = Color( 1, 1, 1, 0 )
+show_behind_parent = true
+margin_left = -8.0
+margin_top = -12.0
+margin_right = 9.0
+margin_bottom = 8.0
+disabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="B2" type="Sprite" parent="BluePlayer/BluePath"]
+position = Vector2( 234.187, 967.47 )
+scale = Vector2( 0.924999, 0.924999 )
+texture = ExtResource( 1 )
+script = ExtResource( 10 )
+index = 1
+
+[node name="Button" type="Button" parent="BluePlayer/BluePath/B2"]
+modulate = Color( 1, 1, 1, 0 )
+show_behind_parent = true
+margin_left = -8.0
+margin_top = -12.0
+margin_right = 9.0
+margin_bottom = 8.0
+disabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="B3" type="Sprite" parent="BluePlayer/BluePath"]
+position = Vector2( 144.951, 1053.9 )
+scale = Vector2( 0.924999, 0.924999 )
+texture = ExtResource( 1 )
+script = ExtResource( 10 )
+index = 2
+
+[node name="Button" type="Button" parent="BluePlayer/BluePath/B3"]
+modulate = Color( 1, 1, 1, 0 )
+show_behind_parent = true
+margin_left = -8.0
+margin_top = -12.0
+margin_right = 9.0
+margin_bottom = 8.0
+disabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="B4" type="Sprite" parent="BluePlayer/BluePath"]
+position = Vector2( 234.187, 1055.02 )
+scale = Vector2( 0.924999, 0.924999 )
+texture = ExtResource( 1 )
+script = ExtResource( 10 )
+index = 3
+
+[node name="Button" type="Button" parent="BluePlayer/BluePath/B4"]
+modulate = Color( 1, 1, 1, 0 )
+show_behind_parent = true
+margin_left = -8.0
+margin_top = -12.0
+margin_right = 9.0
+margin_bottom = 8.0
+disabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RedPlayer" type="Sprite" parent="."]
+script = ExtResource( 11 )
+index = 1
+
+[node name="icon" type="Sprite" parent="RedPlayer"]
+position = Vector2( 139.296, 464 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 3 )
+
+[node name="RedPin" type="Sprite" parent="RedPlayer"]
+position = Vector2( 187.296, 424 )
+scale = Vector2( 1.56667, 1.56667 )
+texture = ExtResource( 6 )
+script = ExtResource( 15 )
+
+[node name="RedPath" type="Path2D" parent="RedPlayer"]
+curve = SubResource( 2 )
+
+[node name="R1" type="Sprite" parent="RedPlayer/RedPath"]
+position = Vector2( 144, 624 )
+scale = Vector2( 0.924999, 0.924999 )
+texture = ExtResource( 6 )
+script = ExtResource( 10 )
+
+[node name="Button" type="Button" parent="RedPlayer/RedPath/R1"]
+modulate = Color( 1, 1, 1, 0 )
+show_behind_parent = true
+margin_left = -8.0
+margin_top = -12.0
+margin_right = 9.0
+margin_bottom = 8.0
+disabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="R2" type="Sprite" parent="RedPlayer/RedPath"]
+position = Vector2( 232, 624 )
+scale = Vector2( 0.924999, 0.924999 )
+texture = ExtResource( 6 )
+script = ExtResource( 10 )
+index = 1
+
+[node name="Button" type="Button" parent="RedPlayer/RedPath/R2"]
+modulate = Color( 1, 1, 1, 0 )
+show_behind_parent = true
+margin_left = -8.0
+margin_top = -12.0
+margin_right = 9.0
+margin_bottom = 8.0
+disabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="R3" type="Sprite" parent="RedPlayer/RedPath"]
+position = Vector2( 144, 712 )
+scale = Vector2( 0.924999, 0.924999 )
+texture = ExtResource( 6 )
+script = ExtResource( 10 )
+index = 2
+
+[node name="Button" type="Button" parent="RedPlayer/RedPath/R3"]
+modulate = Color( 1, 1, 1, 0 )
+show_behind_parent = true
+margin_left = -8.0
+margin_top = -12.0
+margin_right = 9.0
+margin_bottom = 8.0
+disabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="R4" type="Sprite" parent="RedPlayer/RedPath"]
+position = Vector2( 232, 712 )
+scale = Vector2( 0.924999, 0.924999 )
+texture = ExtResource( 6 )
+script = ExtResource( 10 )
+index = 3
+
+[node name="Button" type="Button" parent="RedPlayer/RedPath/R4"]
+modulate = Color( 1, 1, 1, 0 )
+show_behind_parent = true
+margin_left = -8.0
+margin_top = -12.0
+margin_right = 9.0
+margin_bottom = 8.0
+disabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GreenPlayer" type="Sprite" parent="."]
+script = ExtResource( 12 )
+index = 2
+
+[node name="icon" type="Sprite" parent="GreenPlayer"]
+position = Vector2( 580, 460.5 )
+scale = Vector2( 1.875, 1.875 )
+texture = ExtResource( 3 )
+
+[node name="GreenPin" type="Sprite" parent="GreenPlayer"]
+position = Vector2( 619.5, 421 )
+scale = Vector2( 1.3, 1.3 )
+texture = ExtResource( 4 )
+script = ExtResource( 15 )
+
+[node name="GreenPath" type="Path2D" parent="GreenPlayer"]
+curve = SubResource( 3 )
+
+[node name="G1" type="Sprite" parent="GreenPlayer/GreenPath"]
+position = Vector2( 488, 624 )
+scale = Vector2( 0.924999, 0.924999 )
+texture = ExtResource( 4 )
+script = ExtResource( 10 )
+
+[node name="Button" type="Button" parent="GreenPlayer/GreenPath/G1"]
+modulate = Color( 1, 1, 1, 0 )
+show_behind_parent = true
+margin_left = -8.0
+margin_top = -12.0
+margin_right = 9.0
+margin_bottom = 8.0
+disabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="G2" type="Sprite" parent="GreenPlayer/GreenPath"]
+position = Vector2( 576, 624 )
+scale = Vector2( 0.924999, 0.924999 )
+texture = ExtResource( 4 )
+script = ExtResource( 10 )
+index = 1
+
+[node name="Button" type="Button" parent="GreenPlayer/GreenPath/G2"]
+modulate = Color( 1, 1, 1, 0 )
+show_behind_parent = true
+margin_left = -8.0
+margin_top = -12.0
+margin_right = 9.0
+margin_bottom = 8.0
+disabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="G3" type="Sprite" parent="GreenPlayer/GreenPath"]
+position = Vector2( 488, 712 )
+scale = Vector2( 0.924999, 0.924999 )
+texture = ExtResource( 4 )
+script = ExtResource( 10 )
+index = 2
+
+[node name="Button" type="Button" parent="GreenPlayer/GreenPath/G3"]
+modulate = Color( 1, 1, 1, 0 )
+show_behind_parent = true
+margin_left = -8.0
+margin_top = -12.0
+margin_right = 9.0
+margin_bottom = 8.0
+disabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="G4" type="Sprite" parent="GreenPlayer/GreenPath"]
+position = Vector2( 576, 712 )
+scale = Vector2( 0.924999, 0.924999 )
+texture = ExtResource( 4 )
+script = ExtResource( 10 )
+index = 3
+
+[node name="Button" type="Button" parent="GreenPlayer/GreenPath/G4"]
+modulate = Color( 1, 1, 1, 0 )
+show_behind_parent = true
+margin_left = -8.0
+margin_top = -12.0
+margin_right = 9.0
+margin_bottom = 8.0
+disabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="YellowPlayer" type="Sprite" parent="."]
+script = ExtResource( 13 )
+index = 3
+
+[node name="icon" type="Sprite" parent="YellowPlayer"]
+position = Vector2( 576, 1216 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 3 )
+
+[node name="YellowPin" type="Sprite" parent="YellowPlayer"]
+position = Vector2( 623.5, 1176.5 )
+scale = Vector2( 1.56667, 1.56667 )
+texture = ExtResource( 5 )
+script = ExtResource( 15 )
+
+[node name="YellowPath" type="Path2D" parent="YellowPlayer"]
+curve = SubResource( 4 )
+
+[node name="Y1" type="Sprite" parent="YellowPlayer/YellowPath"]
+position = Vector2( 488, 968 )
+scale = Vector2( 0.924999, 0.924999 )
+texture = ExtResource( 5 )
+script = ExtResource( 10 )
+
+[node name="Button" type="Button" parent="YellowPlayer/YellowPath/Y1"]
+modulate = Color( 1, 1, 1, 0 )
+show_behind_parent = true
+margin_left = -8.0
+margin_top = -12.0
+margin_right = 9.0
+margin_bottom = 8.0
+disabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Y2" type="Sprite" parent="YellowPlayer/YellowPath"]
+position = Vector2( 576, 968 )
+scale = Vector2( 0.924999, 0.924999 )
+texture = ExtResource( 5 )
+script = ExtResource( 10 )
+index = 1
+
+[node name="Button" type="Button" parent="YellowPlayer/YellowPath/Y2"]
+modulate = Color( 1, 1, 1, 0 )
+show_behind_parent = true
+margin_left = -8.0
+margin_top = -12.0
+margin_right = 9.0
+margin_bottom = 8.0
+disabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Y3" type="Sprite" parent="YellowPlayer/YellowPath"]
+position = Vector2( 488, 1056 )
+scale = Vector2( 0.924999, 0.924999 )
+texture = ExtResource( 5 )
+script = ExtResource( 10 )
+index = 2
+
+[node name="Button" type="Button" parent="YellowPlayer/YellowPath/Y3"]
+modulate = Color( 1, 1, 1, 0 )
+show_behind_parent = true
+margin_left = -8.0
+margin_top = -12.0
+margin_right = 9.0
+margin_bottom = 8.0
+disabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Y4" type="Sprite" parent="YellowPlayer/YellowPath"]
+position = Vector2( 576.925, 1056 )
+scale = Vector2( 0.924999, 0.924999 )
+texture = ExtResource( 5 )
+script = ExtResource( 10 )
+index = 3
+
+[node name="Button" type="Button" parent="YellowPlayer/YellowPath/Y4"]
+modulate = Color( 1, 1, 1, 0 )
+show_behind_parent = true
+margin_left = -8.0
+margin_top = -12.0
+margin_right = 9.0
+margin_bottom = 8.0
+disabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dice" type="Sprite" parent="."]
+position = Vector2( 0, 72 )
+script = ExtResource( 8 )
+
+[node name="DiceView" type="AnimatedSprite" parent="Dice"]
+position = Vector2( 360, 1264 )
+scale = Vector2( 1.42308, 1.42308 )
+frames = SubResource( 35 )
+animation = "DiceFace"
+frame = 1
+speed_scale = 4.0
+
+[node name="DiceButton" type="Button" parent="Dice"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 304.0
+margin_top = 1216.0
+margin_right = 408.0
+margin_bottom = 1312.0
+text = "?"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ShowDice" type="Sprite" parent="."]
+position = Vector2( 0, 72 )
+
+[node name="DiceView" type="AnimatedSprite" parent="ShowDice"]
+position = Vector2( 368, 312 )
+scale = Vector2( 1.01923, 1.01923 )
+frames = SubResource( 35 )
+animation = "DiceFace"
+frame = 1
+speed_scale = 8.0
+[connection signal="pressed" from="BluePlayer/BluePath/B1/Button" to="BluePlayer/BluePath/B1" method="_on_Button_pressed"]
+[connection signal="pressed" from="BluePlayer/BluePath/B2/Button" to="BluePlayer/BluePath/B2" method="_on_Button_pressed"]
+[connection signal="pressed" from="BluePlayer/BluePath/B3/Button" to="BluePlayer/BluePath/B3" method="_on_Button_pressed"]
+[connection signal="pressed" from="BluePlayer/BluePath/B4/Button" to="BluePlayer/BluePath/B4" method="_on_Button_pressed"]
+[connection signal="pressed" from="RedPlayer/RedPath/R1/Button" to="RedPlayer/RedPath/R1" method="_on_Button_pressed"]
+[connection signal="pressed" from="RedPlayer/RedPath/R2/Button" to="RedPlayer/RedPath/R2" method="_on_Button_pressed"]
+[connection signal="pressed" from="RedPlayer/RedPath/R3/Button" to="RedPlayer/RedPath/R3" method="_on_Button_pressed"]
+[connection signal="pressed" from="RedPlayer/RedPath/R4/Button" to="RedPlayer/RedPath/R4" method="_on_Button_pressed"]
+[connection signal="pressed" from="GreenPlayer/GreenPath/G1/Button" to="GreenPlayer/GreenPath/G1" method="_on_Button_pressed"]
+[connection signal="pressed" from="GreenPlayer/GreenPath/G2/Button" to="GreenPlayer/GreenPath/G2" method="_on_Button_pressed"]
+[connection signal="pressed" from="GreenPlayer/GreenPath/G3/Button" to="GreenPlayer/GreenPath/G3" method="_on_Button_pressed"]
+[connection signal="pressed" from="GreenPlayer/GreenPath/G4/Button" to="GreenPlayer/GreenPath/G4" method="_on_Button_pressed"]
+[connection signal="pressed" from="YellowPlayer/YellowPath/Y1/Button" to="YellowPlayer/YellowPath/Y1" method="_on_Button_pressed"]
+[connection signal="pressed" from="YellowPlayer/YellowPath/Y2/Button" to="YellowPlayer/YellowPath/Y2" method="_on_Button_pressed"]
+[connection signal="pressed" from="YellowPlayer/YellowPath/Y3/Button" to="YellowPlayer/YellowPath/Y3" method="_on_Button_pressed"]
+[connection signal="pressed" from="YellowPlayer/YellowPath/Y4/Button" to="YellowPlayer/YellowPath/Y4" method="_on_Button_pressed"]
+[connection signal="rolled" from="Dice" to="." method="_on_Dice_rolled"]
+[connection signal="animation_finished" from="Dice/DiceView" to="Dice" method="_on_Roll_animation_finished"]
+[connection signal="button_up" from="Dice/DiceButton" to="Dice" method="_on_DiceButton_button_up"]
