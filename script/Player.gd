@@ -7,7 +7,10 @@ var pins = []
 var path:Path2D = null
 var indicator_pin = null
 
-signal end_player_turn(player_idx, pin_idx, pin_status)
+signal pin_chosen(pin_idx)
+
+func set_player_name(name):
+	get_node("PlayerName").text = name
 
 func highlight_player():
 	indicator_pin.highlight()
@@ -49,11 +52,11 @@ func disable_all_pins():
 
 func process_pin_click(idx):
 	disable_all_pins()
-	emit_signal("end_player_turn", index, idx, pins[idx].status)
+	emit_signal("pin_chosen", idx)
 
-func move_pin(pin_idx, new_pin_status):
-	var pin: Pin = pins[pin_idx]
-	return pin.move(new_pin_status)
+#func move_pin(pin_idx, new_pin_status):
+#	var pin: Pin = pins[pin_idx]
+#	return pin.move(new_pin_status)
 	
 func has_won():
 	var won = true
@@ -63,7 +66,19 @@ func has_won():
 			break 
 	return won
 
-func show_victory():
-	for pin in pins:
-		pin.hide()
+func show_your_turn():
+	var status_text = get_parent().find_node("GameStatus")
+	status_text.text = "Your Turn"
+	status_text.show()
+
+func hide_your_turn():
+	var status_text = get_parent().find_node("GameStatus")
+	status_text.text = ""
+	status_text.hide()
+
+func show_victory(standing):
+#	for pin in pins:
+#		pin.hide()
+	$VictoryPanel/Position.text = str(standing)
+	$VictoryPanel.show()
 

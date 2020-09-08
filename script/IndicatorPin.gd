@@ -12,7 +12,7 @@ func _ready():
 
 func highlight():
 	start_pos = self.position
-	highlight_pos = self.position - Vector2(0, self.texture.get_height()/2)
+	highlight_pos = self.position - Vector2(0, self.texture.get_height() * self.scale.y /2)
 	show_highlight = true
 	tween_indicator()
 

@@ -14,8 +14,11 @@ signal pin_selected(idx)
 func _ready():
 	home_position = self.position
 
-func common_path_index_get():
-	if -1 < status and status < 50:
+func common_path_index_get() -> int:
+	return get_common_path_index(status)
+
+func get_common_path_index(status_val):
+	if -1 <status_val and status < 50:
 		return (common_path_seed + status) % 52
 	else:
 		return -1
@@ -35,42 +38,32 @@ func kill_pin():
 	yield(tween, "tween_all_completed")
 
 func enable():
-	if is_network_master():
-		highlight()
-		self.z_index = 1
-		$Button.disabled=false
+	highlight()
+	self.z_index = 1
+	$Button.disabled=false
 
 func disable():
-	if is_network_master():
-		stop_highlight()
-		self.z_index = 0
-		$Button.disabled=true
+	stop_highlight()
+	self.z_index = 0
+	$Button.disabled=true
 	
-func move(new_pin_status:int):
-	rpc("_move", status, new_pin_status)
-	status = new_pin_status
-	return self.common_path_index
-	
-
-sync func _move(initial_status: int, new_pin_status:int):
+func move(initial_status: int, new_pin_status:int):
 	var idx = 0
 	var tween_delay = 0.2
 	var pin_target
 	var old_pos = self.position
-	status = new_pin_status
-	if status != -1:
+	if new_pin_status != -1:
 		for new_stat in range(initial_status + 1, new_pin_status + 1):
 			var target_in_curve = path.get_curve().get_point_position(new_stat)
-			pin_target = target_in_curve + Vector2(0, - self.texture.get_height()/2)
+			pin_target = target_in_curve + Vector2(0, - self.texture.get_height() * self.scale.y /2)
 			tween.interpolate_property(self, "position", old_pos, pin_target, tween_delay, Tween.TRANS_QUINT, Tween.EASE_OUT, idx * tween_delay)
 			idx +=  1
 			old_pos = pin_target
 		tween.start()	
-		print (self.common_path_index, ", ", status)
-		
+
 
 func status_set(value):
-	status = min(value, 55)
+	status = min(value, 56)
 
 func _on_Button_pressed():
 	emit_signal("pin_selected", index)

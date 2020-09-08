@@ -1,6 +1,27 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://script/lobby/Lobby.gd" type="Script" id=1]
+[ext_resource path="res://assets/fonts/Montserrat-Regular.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 28
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 29
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 19
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 25
+font_data = ExtResource( 2 )
 
 [node name="Lobby" type="Control"]
 anchor_right = 1.0
@@ -10,31 +31,154 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Join" type="Button" parent="."]
-margin_left = 216.0
-margin_top = 240.0
-margin_right = 528.0
-margin_bottom = 336.0
-text = "Join"
+[node name="Host" type="Button" parent="."]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_left = 300.132
+margin_top = 840.0
+margin_right = 422.132
+margin_bottom = 904.0
+text = "Host"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Host" type="Button" parent="."]
-margin_left = 216.0
-margin_top = 416.0
-margin_right = 528.0
-margin_bottom = 504.0
-text = "Host"
+[node name="Label" type="Label" parent="Host"]
+margin_right = 120.0
+margin_bottom = 64.0
+custom_fonts/font = SubResource( 1 )
+custom_constants/shadow_offset_x = 0
+text = "HOST"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="home_ip" type="LineEdit" parent="."]
-margin_left = 216.0
-margin_top = 128.0
-margin_right = 512.0
-margin_bottom = 200.0
+[node name="Join" type="Button" parent="."]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_left = 300.132
+margin_top = 960.0
+margin_right = 420.132
+margin_bottom = 1025.0
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Join"]
+margin_left = -1.0
+margin_right = 120.0
+margin_bottom = 64.0
+custom_fonts/font = SubResource( 1 )
+custom_constants/shadow_offset_x = 0
+text = "JOIN"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartGame" type="Button" parent="."]
+visible = false
+self_modulate = Color( 1, 1, 1, 0 )
+margin_left = 268.055
+margin_top = 1072.0
+margin_right = 450.055
+margin_bottom = 1137.0
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="StartGame"]
+margin_right = 182.0
+margin_bottom = 64.0
+custom_fonts/font = SubResource( 1 )
+custom_constants/shadow_offset_x = 0
+text = "Start Game"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="host_ip" type="LineEdit" parent="."]
+margin_left = 268.055
+margin_top = 225.134
+margin_right = 564.055
+margin_bottom = 297.134
+custom_fonts/font = SubResource( 4 )
 text = "127.0.0.1"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="pressed" from="Join" to="." method="_on_Join_pressed"]
+
+[node name="Label" type="Label" parent="host_ip"]
+margin_left = -154.0
+margin_right = -34.0
+margin_bottom = 72.0
+custom_fonts/font = SubResource( 1 )
+custom_constants/shadow_offset_x = 0
+text = "Host Ip"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Nickname" type="LineEdit" parent="."]
+margin_left = 268.055
+margin_top = 339.427
+margin_right = 564.055
+margin_bottom = 411.427
+custom_fonts/font = SubResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Nickname"]
+margin_left = -188.923
+margin_right = -23.9228
+margin_bottom = 72.0
+custom_fonts/font = SubResource( 1 )
+custom_constants/shadow_offset_x = 0
+text = "Nickname"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Status" type="Label" parent="."]
+margin_left = 85.6216
+margin_top = 504.0
+margin_right = 647.622
+margin_bottom = 596.0
+custom_fonts/font = SubResource( 2 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="JoinedPlayers" type="Label" parent="."]
+visible = false
+self_modulate = Color( 0.976471, 0.415686, 0, 1 )
+margin_left = 134.0
+margin_top = 608.0
+margin_right = 598.0
+margin_bottom = 784.0
+custom_fonts/font = SubResource( 3 )
+text = "Players in Lobby:
+"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="button_down" from="Host" to="." method="_on_Host_button_down"]
+[connection signal="button_up" from="Host" to="." method="_on_Host_button_up"]
 [connection signal="pressed" from="Host" to="." method="_on_Host_pressed"]
+[connection signal="button_down" from="Join" to="." method="_on_Join_button_down"]
+[connection signal="button_up" from="Join" to="." method="_on_Join_button_up"]
+[connection signal="pressed" from="Join" to="." method="_on_Join_pressed"]
+[connection signal="pressed" from="StartGame" to="." method="_on_StartGame_pressed"]

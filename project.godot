@@ -36,6 +36,10 @@ config/name="Ludo"
 run/main_scene="res://Lobby.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Config="*res://script/lobby/Config.gd"
+
 [display]
 
 window/size/width=720
@@ -46,4 +50,5 @@ window/stretch/aspect="keep"
 
 [rendering]
 
+environment/default_clear_color=Color( 0.0745098, 0.0588235, 0.254902, 1 )
 environment/default_environment="res://default_env.tres"
